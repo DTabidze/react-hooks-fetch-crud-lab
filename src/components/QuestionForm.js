@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function QuestionForm(props) {
+function QuestionForm({addQuestion,updateCorrectAnswer}) {
   const [formData, setFormData] = useState({
     prompt: "",
     answer1: "",
@@ -20,6 +20,12 @@ function QuestionForm(props) {
   function handleSubmit(event) {
     event.preventDefault();
     console.log(formData);
+    const data={
+      "prompt": formData.prompt,
+      "answers": [formData.answer1,formData.answer2,formData.answer3,formData.answer4],
+      "correctIndex": formData.correctIndex,
+    }
+    addQuestion(data)
   }
 
   return (
@@ -76,7 +82,7 @@ function QuestionForm(props) {
           <select
             name="correctIndex"
             value={formData.correctIndex}
-            onChange={handleChange}
+            onChange={(e) => updateCorrectAnswer(e.target.value,)}
           >
             <option value="0">{formData.answer1}</option>
             <option value="1">{formData.answer2}</option>
